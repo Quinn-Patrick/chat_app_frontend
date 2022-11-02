@@ -1,0 +1,8 @@
+<p>Welcome {{this.user.username}}</p>
+<p>Select another user to chat with them:</p>
+
+<ul class="users">
+    <li *ngFor="let otherUser of allUsers">
+        <p>{{otherUser.username}}</p>
+    </li>
+</ul>
