@@ -4,6 +4,7 @@ import { Message } from '../message';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat-room',
@@ -15,6 +16,7 @@ export class ChatRoomComponent implements OnInit {
   @Input() user2?: User;
 
   messageInput: string = '';
+  subscription: Subscription;
 
   messages: Message[] = [];
 
@@ -23,10 +25,17 @@ export class ChatRoomComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private messageService: MessageService
-    ) { }
+    ) { 
+      const source = interval(1000);
+      this.subscription = source.subscribe(x => this.getMessages());
+    }
 
   ngOnInit(): void {
     this.getUsers();
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 
   getUsers(): void{
