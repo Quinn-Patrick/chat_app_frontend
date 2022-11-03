@@ -3,6 +3,8 @@
 
 <ul class="users">
     <li *ngFor="let otherUser of allUsers">
-        <p>{{otherUser.username}}</p>
+        <a routerLink="/chat/{{this.user.username}}/{{otherUser.username}}">
+            <span class="badge">{{otherUser.username}}</span>
+        </a>
     </li>
 </ul>

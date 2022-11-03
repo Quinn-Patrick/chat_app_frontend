@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { ChatRoomComponent } from './chat-room/chat-room.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LoginComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    ChatRoomComponent
     
   ],
   imports: [
