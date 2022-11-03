@@ -22,6 +22,10 @@ export class UserService {
     return this.http.post<Access>(this.userUrl + '/login', form);
   }
 
+  signup(user: any): Observable<User>{
+    return this.http.post<User>(`${this.userUrl}/user/save`, user);
+  }
+
   getUser(username: string): Observable<User>{
     const httpOptions = this.httpOptionsService.getHttpHeaders();
     return this.http.get<User>(`${this.userUrl}/user/${username}`, httpOptions);

@@ -1,4 +1,4 @@
-import { Component, DebugElement, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {Router} from "@angular/router"
 import { UserService } from '../user.service';
@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void{
     let form: FormData = new FormData();
-    if(this.loginForm.value.username === null || this.loginForm.value.username === undefined) return;
-    if(this.loginForm.value.password === null || this.loginForm.value.password === undefined) return;
+    if(!this.loginForm.value.username) return;
+    if(!this.loginForm.value.password) return;
 
     let username: string = this.loginForm.value.username;
     let password: string = this.loginForm.value.password;

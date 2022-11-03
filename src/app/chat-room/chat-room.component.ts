@@ -66,8 +66,8 @@ export class ChatRoomComponent implements OnInit {
         content: this.messageInput,
         date: new Date().toLocaleString()
       }
+      this.messageInput = '';
       this.messageService.postMessage(message).subscribe((output) =>{
-        //console.log(output);
         this.getMessages();
       });
     }
