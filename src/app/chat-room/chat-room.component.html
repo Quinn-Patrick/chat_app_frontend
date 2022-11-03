@@ -1,5 +1,12 @@
 <div *ngIf="user1 && user2">
     <h2>Chatting between {{user1.username}} and {{user2.username}}</h2>
+
+    <ul class="messages">
+        <li *ngFor="let message of messages">
+            <p>{{message.user1.username}}: {{message.content}}</p><br>
+        </li>
+    </ul>
+
+    <textarea id="messageInput" name="messageInput" [(ngModel)]="messageInput" rows="4" cols="50"></textarea><br>
+    <input type="button" value="Send" (click)="this.sendMessage()">
 </div>
-<textarea id="messageInput" name="messageInput" [(ngModel)]="messageInput" rows="4" cols="50"></textarea><br>
-<input type="button" value="Send" (click)="this.sendMessage()">

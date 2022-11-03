@@ -16,6 +16,8 @@ export class ChatRoomComponent implements OnInit {
 
   messageInput: string = '';
 
+  messages: Message[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -48,7 +50,6 @@ export class ChatRoomComponent implements OnInit {
   }
 
   sendMessage(): void{
-    console.log("Attempting to send message.");
     if(this.user1 && this.user2 && this.messageInput){
       const message: Message = {
         user1: this.user1,
@@ -56,8 +57,18 @@ export class ChatRoomComponent implements OnInit {
         content: this.messageInput,
         date: new Date().toLocaleString()
       }
-      console.log("Attempting to send message.");
-      this.messageService.postMessage(message).subscribe((output) => console.log(output));
+      this.messageService.postMessage(message).subscribe((output) =>{
+        //console.log(output);
+        this.getMessages();
+      });
+    }
+  }
+
+  getMessages(): void{
+    if(this.user1 && this.user2){
+      this.messageService.getMessages(this.user1.username, this.user2.username).subscribe((messages) => {
+        this.messages = messages;
+      });
     }
   }
 }
