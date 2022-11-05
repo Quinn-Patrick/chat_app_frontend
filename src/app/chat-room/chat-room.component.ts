@@ -1,3 +1,7 @@
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+
+
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../user';
 import { Message } from '../message';
@@ -5,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { MessageService } from '../message.service';
 import { interval, Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat-room',
@@ -15,8 +20,10 @@ export class ChatRoomComponent implements OnInit {
   @Input() user1?: User;
   @Input() user2?: User;
 
+  private url = `${environment.api}`;
+  private stompClient: any = null;
+
   messageInput: string = '';
-  subscription: Subscription;
 
   messages: Message[] = [];
 
@@ -25,17 +32,14 @@ export class ChatRoomComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private messageService: MessageService
-    ) { 
-      const source = interval(1000);
-      this.subscription = source.subscribe(x => this.getMessages());
-    }
+    ) { }
 
   ngOnInit(): void {
     this.getUsers();
+    this.connect();
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
   }
 
   getUsers(): void{
@@ -58,8 +62,33 @@ export class ChatRoomComponent implements OnInit {
     })
   }
 
+  connect(): void{
+    const socket = new SockJS(`${this.url}/ws`);
+    this.stompClient = Stomp.over(socket);
+    this.stompClient.connect({}, (frame: any) => {
+      console.log('Connected: ' + frame);
+      this.stompClient.subscribe(`${this.url}/topic/messages`, (messageOutput: any) => {
+        if(this.compareUsers(messageOutput)){
+          this.messages.concat(messageOutput.body);
+          console.log("Message recieved.");
+        }else{
+          console.log("Incoming message does not belong in this chat room.");
+        }
+      })
+    })
+  }
+
+  //This method ensures that the incoming messages belong in this chat room.
+  compareUsers(messageOutput: any): boolean{
+    const incomingUsername1: string = messageOutput.body.user1.username;
+    const incomingUsername2: string = messageOutput.body.user2.username;
+
+    return ((incomingUsername1 === this.user1?.username && incomingUsername2 === this.user2?.username) 
+    || (incomingUsername2 === this.user1?.username && incomingUsername1 === this.user2?.username))
+  }
+
   sendMessage(): void{
-    if(this.user1 && this.user2 && this.messageInput){
+    if(this.user1 && this.user2){
       const message: Message = {
         user1: this.user1,
         user2: this.user2,
@@ -67,6 +96,13 @@ export class ChatRoomComponent implements OnInit {
         date: new Date().toLocaleString()
       }
       this.messageInput = '';
+      this.stompClient.send(`${this.url}/app/chat`, {}, JSON.stringify(message));
+      this.storeMessage(message);
+    }
+  }
+
+  storeMessage(message: Message): void{
+    if(this.user1 && this.user2 && this.messageInput){
       this.messageService.postMessage(message).subscribe((output) =>{
         this.getMessages();
       });
