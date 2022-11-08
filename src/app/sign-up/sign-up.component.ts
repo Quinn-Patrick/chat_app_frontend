@@ -26,9 +26,11 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit(){
+    //Don't progress if there's no password, or if the passwords don't match.
     if(this.signupForm.value.password != this.signupForm.value.confirmPassword){
       return;
     }
+    //Be sure that all of the fields are populated before bothering the server.
     if(this.signupForm.value.username && this.signupForm.value.password && this.signupForm.value.confirmPassword ){
       const user = {
         username: this.signupForm.value.username,

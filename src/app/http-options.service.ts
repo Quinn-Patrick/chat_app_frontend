@@ -5,6 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
+//This just lets us grab the standard http headers found in methods
+//throughout the app without repeating code.
 export class HttpOptionsService {
 
   constructor(private cookieService: CookieService) { }
