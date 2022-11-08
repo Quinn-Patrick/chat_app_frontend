@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
