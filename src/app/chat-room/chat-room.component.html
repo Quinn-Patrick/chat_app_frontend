@@ -3,11 +3,27 @@
 
     <ul class="messages">
         <li *ngFor="let message of messages">
-            <p *ngIf="message.user1.username == user1.username" class="sent">{{message.user1.username}}: {{message.content}}</p>
-            <p *ngIf="message.user1.username == user2.username" class="received">{{message.user1.username}}: {{message.content}}</p>
+            <p *ngIf="message.user1.username == user1.username" class="sent">
+                <span class="senderName">
+                    {{message.user1.username}}:<br>
+                </span> 
+                {{message.content}}
+                <span class="timestamp">
+                    <br>Sent {{message.date}}
+                </span>
+            </p>
+            <p *ngIf="message.user1.username == user2.username" class="received">
+                <span class="senderName">
+                    {{message.user1.username}}:<br>
+                </span> 
+                {{message.content}}
+                <span class="timestamp">
+                    <br>Sent {{message.date}}
+                </span>
+            </p>
         </li>
     </ul>
 
     <input id="messageInput" name="messageInput" [(ngModel)]="messageInput"><br>
-    <input type="button" value="Send" (click)="this.sendMessage()">
+    <button value="Send" (click)="this.sendMessage()">Send</button>
 </div>
