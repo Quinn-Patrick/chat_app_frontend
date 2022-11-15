@@ -1,1 +1,75 @@
-/* You can add global styles to this file, and also import other style files */
+
+p{
+    color: white;
+}
+li{
+    color: white;
+}
+h1{
+    color: white;
+}
+h2{
+    color: white;
+}
+h3{
+    color: white;
+}
+.column {
+    float: left;
+    width: 50%;
+    padding: 13px;
+  }
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+iframe{
+    position: relative;
+    z-index: 1;
+}
+
+body {
+    background: midnightblue;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+}
+
+.jumbotron{
+    background-color: black;
+    text-align: center;
+}
+label{
+    color: white;
+}
+button{
+    background-color: #eee;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: black;
+    font-size: 1.2rem;
+    padding: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+button:hover{
+    background-color: black;
+    color: white;
+}
+button:disabled{
+    background-color: #eee;
+    color:#aaa;
+    cursor: auto;
+}

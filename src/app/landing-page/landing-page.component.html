@@ -1,10 +1,10 @@
-<p>Welcome {{this.user.username}}</p>
+<h3>Welcome {{this.user.username}}</h3>
 <p>Select another user to chat with them:</p>
 
 <ul class="users">
     <li *ngFor="let otherUser of allUsers">
         <a routerLink="/chat/{{this.user.username}}/{{otherUser.username}}">
-            <span class="badge">{{otherUser.username}}</span>
+            <span class="badge"></span>{{otherUser.username}}
         </a>
     </li>
 </ul>

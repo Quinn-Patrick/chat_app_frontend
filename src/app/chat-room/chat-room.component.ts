@@ -35,9 +35,7 @@ export class ChatRoomComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private messageService: MessageService,
-    ) { 
-    }
+    private messageService: MessageService,) {}
 
   ngOnInit(): void {
     this.getBothUsers(); //We need to pull in both of the users from the database.
@@ -55,9 +53,9 @@ export class ChatRoomComponent implements OnInit {
     this.stompClient.connect({}, (frame: any) => {
       console.log('Connected: ' + frame);
       this.stompClient.subscribe(`/topic/messages`, (messageOutput: any) => {
-          console.log("Message received."); //No actual data is contained in the response.
+          console.log("Message received."); //No actual (useful) data is contained in the response. It's just so the client knows when to check.
           this.getMessages(); //Once the server tells the client that a new message has been sent, the client has to ask what it is.
-          //This keeps everything synchronized, and it allows the messages to be persistant in a database.
+          //This keeps everything synchronized, and it allows the messages to be persistent in a database.
       })
     })
   }
@@ -73,7 +71,7 @@ export class ChatRoomComponent implements OnInit {
       }
     })
 
-    //Do it again for user2. Doing it twice seems like a code smell, but it's simpler this way due to the promises.
+    //Do it again for user2. Doing it twice seems like a code smell, but it's simpler this way due to the observables.
     const username2: string = this.route.snapshot.paramMap.get('username2')! 
     console.log(`user 2 is named ${username2}`);
     this.userService.getUser(username2).subscribe((user) =>{ 

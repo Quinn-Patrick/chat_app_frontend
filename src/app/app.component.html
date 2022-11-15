@@ -2,12 +2,18 @@
 <head>
   
 </head>
-<div class="container">
+<body>
+    <div class="container">
 
-    <div class="jumbotron">
-        <h1>Quinn's One on One Chat Application</h1>
+        <div class="jumbotron">
+            <h1>Quinn's One on One Chat Application</h1>
+        </div>
+        <div class = "row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
     </div>
-
-<router-outlet></router-outlet>
-
-</div>
+</body>

@@ -1,12 +1,13 @@
 <div *ngIf="user1 && user2">
-    <h2>Chatting between {{user1.username}} and {{user2.username}}</h2>
+    <h2>Chatting with {{user2.username}}</h2>
 
     <ul class="messages">
         <li *ngFor="let message of messages">
-            <p>{{message.user1.username}}: {{message.content}}</p><br>
+            <p *ngIf="message.user1.username == user1.username" class="sent">{{message.user1.username}}: {{message.content}}</p>
+            <p *ngIf="message.user1.username == user2.username" class="received">{{message.user1.username}}: {{message.content}}</p>
         </li>
     </ul>
 
-    <textarea id="messageInput" name="messageInput" [(ngModel)]="messageInput" rows="4" cols="50"></textarea><br>
+    <input id="messageInput" name="messageInput" [(ngModel)]="messageInput"><br>
     <input type="button" value="Send" (click)="this.sendMessage()">
 </div>
